@@ -8,12 +8,38 @@ export async function POST(req) {
       return Response.json({ error: 'Query too short' }, { status: 400 });
     }
 
-    const result = await runOrchestrator(query.trim());
+    const encoder = new TextEncoder();
+    const stream = new ReadableStream({
+      async start(controller) {
+        const enqueueJson = (obj) => {
+          controller.enqueue(encoder.encode(JSON.stringify(obj) + '\n'));
+        };
 
-    return Response.json({ success: true, result });
+        try {
+          const result = await runOrchestrator(query.trim(), (stage, message) => {
+            enqueueJson({ type: "stage", stage, message });
+          });
+
+          enqueueJson({ type: "result", data: result });
+        } catch (error) {
+          console.error('Orchestrator streaming error:', error);
+          enqueueJson({ type: "error", error: error.message });
+        } finally {
+          controller.close();
+        }
+      }
+    });
+
+    return new Response(stream, {
+      headers: {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        'Connection': 'keep-alive',
+      },
+    });
 
   } catch (error) {
-    console.error('Orchestrator error:', error);
+    console.error('Request parsing error:', error);
     return Response.json({ error: error.message }, { status: 500 });
   }
 }

@@ -5,7 +5,7 @@ export async function GET() {
     const keys = await listMemories();
     const memories = [];
 
-    for (const { key, timestamp } of keys.slice(0, 10)) {
+    for (const { key, timestamp } of keys.slice(0, 20)) {
       const mem = await loadMemory(key);
       if (mem) {
         memories.push({
