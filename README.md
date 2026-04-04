@@ -1,4 +1,4 @@
-<![CDATA[<div align="center">
+<div align="center">
 
 # 🧠 Memo
 
@@ -35,7 +35,7 @@ What makes Memo fundamentally different:
 
 ## 🏗️ System Architecture
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────┐
 │                        FRONTEND (Next.js 16)                │
 │  ┌─────────────┐  ┌──────────────────┐  ┌───────────────┐  │
@@ -98,7 +98,7 @@ What makes Memo fundamentally different:
 
 The core of Memo is an **iterative, self-correcting agent loop** — not a simple chain.
 
-```
+```text
 Query → [Retrieve Memories] → [Research] → [Summarize] → [Critique]
                                     ▲                         │
                                     └─── if NEEDS_MORE_RESEARCH
@@ -121,11 +121,11 @@ tools: [
 ```
 
 **How it works:**
-1. The agent receives the query + any relevant past memories as context
-2. Ollama's model decides **autonomously** whether to call tools
-3. If tools are called, results are fed back as `role: 'tool'` messages
-4. The agent can chain multiple tool calls (up to 5 loops) before producing final findings
-5. On refinement iterations, the Critic's identified **gaps** become the new research directive
+1. The agent receives the query + any relevant past memories as context.
+2. Ollama's model decides **autonomously** whether to call tools.
+3. If tools are called, results are fed back as `role: 'tool'` messages.
+4. The agent can chain multiple tool calls (up to 5 loops) before producing final findings.
+5. On refinement iterations, the Critic's identified **gaps** become the new research directive.
 
 This is a **ReAct-style** (Reasoning + Acting) loop running entirely on local hardware.
 
@@ -149,31 +149,31 @@ Produces structured JSON output from raw research findings:
 The Critic introduces **adversarial self-evaluation** into the pipeline:
 
 - **Completeness Check**: Does the answer actually address the query?
-- **Gap Analysis**: Identifies specific missing angles or logical holes
-- **Confidence Scoring**: Rates the output from 0-100
-- **Verdict System**: Returns `APPROVED` to finalize, or `NEEDS_MORE_RESEARCH` to trigger re-entry into the pipeline
-- **Follow-up Generation**: Suggests further lines of inquiry for the user
+- **Gap Analysis**: Identifies specific missing angles or logical holes.
+- **Confidence Scoring**: Rates the output from 0-100.
+- **Verdict System**: Returns `APPROVED` to finalize, or `NEEDS_MORE_RESEARCH` to trigger re-entry into the pipeline.
+- **Follow-up Generation**: Suggests further lines of inquiry for the user.
 
 ### 5. Semantic Memory System (`storage/index.js` + Orchestrator)
 
 Memo has **persistent, semantic memory** — not just raw storage, but intelligent recall:
 
 #### Embedding-Based Retrieval
-```
+```text
 Query → Ollama Embedding → Cosine Similarity vs All Memory Embeddings → Top-K Results
 ```
 
-- Uses Ollama's local embedding model to vectorize both the query and stored memories
-- Computes **cosine similarity** to find semantically related past sessions
-- Falls back to **keyword overlap search** if the embedding model is unavailable
+- Uses Ollama's local embedding model to vectorize both the query and stored memories.
+- Computes **cosine similarity** to find semantically related past sessions.
+- Falls back to **keyword overlap search** if the embedding model is unavailable.
 
 #### Dual Storage Backend
-- **Local Mode** (`USE_0G=false`): Simple JSON files in `./memory/`, zero configuration
+- **Local Mode** (`USE_0G=false`): Simple JSON files in `./memory/`, zero configuration.
 - **Decentralized Mode** (`USE_0G=true`): Full 0G Network integration:
-  - Files are Merkle-tree hashed for tamper-proof integrity
-  - Uploaded to 0G's decentralized storage via the `@0glabs/0g-ts-sdk`
-  - Downloaded by content-addressed root hash
-  - Local index maps memory keys → on-chain root hashes
+  - Files are Merkle-tree hashed for tamper-proof integrity.
+  - Uploaded to 0G's decentralized storage via the `@0glabs/0g-ts-sdk`.
+  - Downloaded by content-addressed root hash.
+  - Local index maps memory keys → on-chain root hashes.
 
 ### 6. Real-Time Streaming Frontend (`app/page.js`)
 
@@ -185,9 +185,9 @@ const reader = res.body.getReader();
 // Each line is a JSON object: { type: "stage", stage: "research", message: "..." }
 ```
 
-- **Live pipeline visualization**: See each agent activate in real-time
-- **Animated 2.5D agent characters** (`components/CartoonAgents.jsx`): Three cartoon agents physically walk to a chalkboard when their stage is active, using `requestAnimationFrame` for smooth 60fps movement with bobbing walk cycles
-- **Interactive follow-up**: Click on Critic-suggested questions to immediately re-run the pipeline
+- **Live pipeline visualization**: See each agent activate in real-time.
+- **Animated 2.5D agent characters** (`components/CartoonAgents.jsx`): Three cartoon agents physically walk to a chalkboard when their stage is active, using `requestAnimationFrame` for smooth 60fps movement with bobbing walk cycles.
+- **Interactive follow-up**: Click on Critic-suggested questions to immediately re-run the pipeline.
 
 ---
 
@@ -277,7 +277,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## 📂 Project Structure
 
-```
+```text
 memo/
 ├── agents/
 │   ├── researchagent.js      # Research Agent — tool-calling, web search, memory recall
@@ -326,7 +326,7 @@ memo/
 
 ## 🧪 How a Query Flows Through the System
 
-```
+```text
 User types: "What are the latest advances in quantum computing?"
          │
          ▼
@@ -373,10 +373,10 @@ User types: "What are the latest advances in quantum computing?"
 
 ## 🛡️ Privacy & Security
 
-- **Zero Telemetry**: No data is sent to any external service (except DuckDuckGo for web search, when the agent decides to call it)
-- **Local-First**: All LLM inference runs on your machine via Ollama
-- **Secrets Management**: `.env.local` is gitignored; private keys never reach version control
-- **0G Storage**: When enabled, memories are content-addressed and verifiable — no centralized server can modify your stored knowledge
+- **Zero Telemetry**: No data is sent to any external service (except DuckDuckGo for web search, when the agent decides to call it).
+- **Local-First**: All LLM inference runs on your machine via Ollama.
+- **Secrets Management**: `.env.local` is gitignored; private keys never reach version control.
+- **0G Storage**: When enabled, memories are content-addressed and verifiable — no centralized server can modify your stored knowledge.
 
 ---
 
@@ -393,4 +393,3 @@ This project is open source under the [MIT License](LICENSE).
 *Memo — Because your research deserves agents that think, debate, and remember.*
 
 </div>
-]]>
