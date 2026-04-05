@@ -156,3 +156,51 @@ nection=8b104af3-1e42-4043
 event=0 ip=198.41.200.23 
 location=bom12 
 protocol=quic
+2026-04-05T08:43:58Z ERR 
+failed to accept incoming 
+stream requests 
+error="failed to accept 
+QUIC stream: timeout: no 
+recent network activity" 
+connIndex=0 event=0 
+ip=198.41.200.23
+2026-04-05T08:43:58Z ERR 
+failed to run the 
+datagram handler 
+error="timeout: no recent 
+network activity" 
+connIndex=0 event=0 
+ip=198.41.200.23
+2026-04-05T08:43:58Z ERR 
+failed to serve tunnel 
+connection error="accept 
+stream listener 
+encountered a failure 
+while serving" 
+connIndex=0 event=0 
+ip=198.41.200.23
+2026-04-05T08:43:58Z ERR 
+Serve tunnel error 
+error="accept stream 
+listener encountered a 
+failure while serving" 
+connIndex=0 event=0 
+ip=198.41.200.23
+2026-04-05T08:43:58Z INF 
+Retrying connection in up 
+to 1s connIndex=0 event=0 
+ip=198.41.200.23
+2026-04-05T08:44:00Z INF 
+Tunnel connection curve 
+preferences: 
+[X25519MLKEM768 
+CurveP256] connIndex=0 
+event=0 ip=198.41.200.23
+2026-04-05T08:44:00Z INF 
+Registered tunnel 
+connection connIndex=0 con
+nection=95c1d366-720f-4e06
+-93bd-db8c9d5742c7 
+event=0 ip=198.41.200.23 
+location=bom08 
+protocol=quic
